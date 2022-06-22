@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Line from './components/Line';
+import GameOver from './components/GameOver';
 
 function App() {
   const [guesses, setGuesses] = useState(Array(6).fill(null))
@@ -12,7 +13,8 @@ function App() {
 
   useEffect(() => {
     const handleType = (event) => {
-      if(event.key === 'Backspace') setCurrentGuess(currentGuess.slice(0, -1))
+      if(gameOver) return
+      else if(event.key === 'Backspace') setCurrentGuess(currentGuess.slice(0, -1))
       else if(event.key === 'Enter')
       {
         if(currentGuess.length !== WORD_LENGTH) return
@@ -20,11 +22,21 @@ function App() {
         const isCorrect = wordle === currentGuess
         if(isCorrect) 
         {
+          const indexToSet = guesses.findIndex(value => value === null)
+          const newGuesses = guesses
+          newGuesses[indexToSet] = currentGuess
+          setGuesses(newGuesses)
+          setCurrentGuess('')
           setGameOver(true)
           setWinner(true)
         }
-        else if(guesses.findIndex(value => value === null) === -1)
+        else if(guesses.findIndex(value => value === null) === guesses.length - 1)
         {
+          const indexToSet = guesses.findIndex(value => value === null)
+          const newGuesses = guesses
+          newGuesses[indexToSet] = currentGuess
+          setGuesses(newGuesses)
+          setCurrentGuess('')
           setGameOver(true)
           setWinner(false)
         }
@@ -55,13 +67,20 @@ function App() {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className='flex flex-col gap-1'>
+
+        {
+          gameOver && 
+          <GameOver 
+            wordle={wordle}
+          />
+        }
         {
           guesses.map((guess, index) => {
             const onCurrent = index === guesses.findIndex(value => value === null)
             return (
                 <Line 
                   key={index}
-                  guess={onCurrent? currentGuess : guess ?? ""}
+                  guess={onCurrent ? currentGuess : guess ?? ""}
                   wordleLength={WORD_LENGTH}  
                   wordle={wordle}
                   submitted={!onCurrent && guess !== null}
