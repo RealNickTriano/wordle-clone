@@ -1,9 +1,10 @@
 import React from 'react'
 
-const GameOver = ({ wordle }) => {
+const GameOver = ({ wordle, winner }) => {
   return (
-    <div>
-        <h1 className='font-bold text-3xl text-center'>The word was: <br /> {wordle}</h1>
+    <div className='font-bold text-3xl text-center'>
+        <h1>The word was: {wordle}</h1>
+        <h1>You {winner ? 'Won': 'Lost'}</h1>
     </div>
   )
 }

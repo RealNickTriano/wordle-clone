@@ -72,6 +72,7 @@ function App() {
           gameOver && 
           <GameOver 
             wordle={wordle}
+            winner={winner}
           />
         }
         {
