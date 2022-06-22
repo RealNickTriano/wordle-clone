@@ -6,6 +6,7 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState('')
   const [gameOver, setGameOver] = useState(false);
   const [winner, setWinner] = useState(false);
+  const [submitted, setSubmitted] = useState(false)
   const wordle = 'apple'
   const WORD_LENGTH = 5
 
@@ -26,6 +27,14 @@ function App() {
         {
           setGameOver(true)
           setWinner(false)
+        }
+        else
+        {
+          const indexToSet = guesses.findIndex(value => value === null)
+          const newGuesses = guesses
+          newGuesses[indexToSet] = currentGuess
+          setGuesses(newGuesses)
+          setCurrentGuess('')
         }
         
       }
@@ -54,6 +63,8 @@ function App() {
                   key={index}
                   guess={onCurrent? currentGuess : guess ?? ""}
                   wordleLength={WORD_LENGTH}  
+                  wordle={wordle}
+                  submitted={!onCurrent && guess !== null}
                 />
               
             )
