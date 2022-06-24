@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Line from './components/Line';
 import GameOver from './components/GameOver';
+import Navbar from './components/Navbar';
 
 function App() {
   const [guesses, setGuesses] = useState(Array(6).fill(null))
@@ -65,31 +66,34 @@ function App() {
   }, [currentGuess])
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className='flex flex-col gap-1'>
+    <div className='mx-8 min-h-screen'>
+      <Navbar />
+      <div className="flex justify-center items-center mt-44">
+        <div className='flex flex-col gap-1'>
 
-        {
-          gameOver && 
-          <GameOver 
-            wordle={wordle}
-            winner={winner}
-          />
-        }
-        {
-          guesses.map((guess, index) => {
-            const onCurrent = index === guesses.findIndex(value => value === null)
-            return (
-                <Line 
-                  key={index}
-                  guess={onCurrent ? currentGuess : guess ?? ""}
-                  wordleLength={WORD_LENGTH}  
-                  wordle={wordle}
-                  submitted={!onCurrent && guess !== null}
-                />
-              
-            )
-          })
-        }
+          {
+            gameOver && 
+            <GameOver 
+              wordle={wordle}
+              winner={winner}
+            />
+          }
+          {
+            guesses.map((guess, index) => {
+              const onCurrent = index === guesses.findIndex(value => value === null)
+              return (
+                  <Line 
+                    key={index}
+                    guess={onCurrent ? currentGuess : guess ?? ""}
+                    wordleLength={WORD_LENGTH}  
+                    wordle={wordle}
+                    submitted={!onCurrent && guess !== null}
+                  />
+                
+              )
+            })
+          }
+        </div>
       </div>
     </div>
   );
