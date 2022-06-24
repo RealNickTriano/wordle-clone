@@ -45,12 +45,34 @@ const Line = ({ guess, wordleLength, wordle, submitted }) => {
         if(char === wordle[j])
         {
           let myPair = newWordlePairs.filter(item => item[0] === char)
-          console.log(myPair)
           myPair = [myPair[0][0], myPair[0][1] - 1]
-          console.log(myPair)
           filteredArray = newWordlePairs.filter(item => item[0] !== char)
           filteredArray.push(myPair)
           newWordlePairs = filteredArray
+        }
+      }
+      if(filteredArray.length !== 0) myWordlePairs = filteredArray
+    }
+
+    const subtractPresent = () => {
+      let newWordlePairs = myWordlePairs
+      let filteredArray = []
+      for (let j = 0; j < wordleLength; j++) 
+      {
+        const char = guess[j]
+        if(wordle.includes(char))
+        {
+          let myPair = newWordlePairs.filter(item => item[0] === char)
+          
+          if(myPair[0][1] > 0)
+          {
+            console.log(myPair[0][1])
+            myPair = [myPair[0][0], myPair[0][1] - 1]
+            filteredArray = newWordlePairs.filter(item => item[0] !== char)
+            filteredArray.push(myPair)
+            console.log(filteredArray)
+            newWordlePairs = filteredArray
+          }
         }
       }
       myWordlePairs = filteredArray
@@ -71,6 +93,7 @@ const Line = ({ guess, wordleLength, wordle, submitted }) => {
         {
           if(myWordlePairs.filter(item => arrayEquals(item, [char, 0])).length === 0)
           {
+            subtractPresent()
             background = {background: '#fbbf24', borderColor: '#fbbf24'}
           } else {
             background = {background: '#cbd5e1', borderColor: '#cbd5e1'}
