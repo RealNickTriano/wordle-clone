@@ -2,9 +2,8 @@ import React from 'react'
 
 const GameOver = ({ wordle, winner }) => {
   return (
-    <div className='font-bold text-3xl text-center'>
-        <h1>The word was: {wordle}</h1>
-        <h1>You {winner ? 'Won': 'Lost'}</h1>
+    <div className='font-bold text-xl text-center bg-neutral-800 rounded-xl px-6 py-2 animate-slideUp'>
+        <h1 className='text-white'>{wordle}</h1>
     </div>
   )
 }

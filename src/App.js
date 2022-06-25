@@ -78,16 +78,17 @@ function App() {
       <Navbar 
         setShowHelp={setShowHelp}
       />
-        <div className="flex justify-center items-center mt-44">
+        <div className="flex justify-center items-center">
           <div className='flex flex-col gap-1'>
-
-            {
-              gameOver && 
-              <GameOver 
-                wordle={wordle}
-                winner={winner}
-              />
-            }
+            <div className='min-h-[10rem] flex justify-center items-center'>
+              {
+                gameOver && 
+                <GameOver 
+                  wordle={wordle}
+                  winner={winner}
+                />
+              }
+            </div>
             {
               guesses.map((guess, index) => {
                 const onCurrent = index === guesses.findIndex(value => value === null)
