@@ -3,7 +3,7 @@ import { IoIosClose } from "react-icons/io";
 
 const Help = ({ setShowHelp }) => {
   return (
-    <div className='flex flex-col justify-center items-center mx-auto max-w-[40%] mt-5'
+    <div className='flex flex-col justify-center items-center mx-auto max-w-[40%] mt-5 translate-y-[50%] animate-slideUp'
     >
         <div className='border-b-2'>
             <div className='flex justify-end items-center mb-5'>

@@ -115,7 +115,7 @@ const Line = ({ guess, wordleLength, wordle, submitted }) => {
         <div 
           key={i}
           style={background}
-          className='border-2 border-gray-500 w-16 h-16 flex justify-center items-center capitalize text-3xl font-bold'
+          className='border-2 border-gray-500 w-16 h-16 flex justify-center items-center capitalize text-4xl font-bold animate-wiggle'
         >{char}</div>
       )
     }

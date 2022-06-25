@@ -68,7 +68,7 @@ function App() {
   }, [currentGuess])
 
   return (
-    <div className='mx-8 min-h-screen'>
+    <div className='mx-8 min-h-screen animate-fadeIn'>
       {showHelp 
       ? 
           <Help 
