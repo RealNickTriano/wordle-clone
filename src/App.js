@@ -3,6 +3,7 @@ import Line from './components/Line';
 import GameOver from './components/GameOver';
 import Navbar from './components/Navbar';
 import Help from './components/Help';
+import Settings from './components/Settings'
 
 function App() {
   const [guesses, setGuesses] = useState(Array(6).fill(null))
@@ -11,6 +12,7 @@ function App() {
   const [winner, setWinner] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const wordle = 'apple'
   const WORD_LENGTH = 5
 
@@ -74,9 +76,17 @@ function App() {
           setShowHelp={setShowHelp}
         /> 
       }
+
+      {showSettings && 
+        <Settings 
+          setShowSettings={setShowSettings}
+        /> 
+      }
+
       <div className='z-3'>
       <Navbar 
         setShowHelp={setShowHelp}
+        setShowSettings={setShowSettings}
       />
         <div className="flex justify-center items-center">
           <div className='flex flex-col gap-1'>
