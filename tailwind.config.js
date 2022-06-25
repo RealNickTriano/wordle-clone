@@ -24,17 +24,20 @@ module.exports = {
         },
         flipGreen: {
           '0%': { transform: 'scaleY(1)', backgroundColor: 'white', borderColor: '#6b7280' },
-          '50%': { transform: 'scaleY(0)', backgroundColor: '#65a30d', borderColor: '#65a30d' },
+          '50%': { transform: 'scaleY(0)', backgroundColor: 'white', borderColor: '#6b7280' },
+          '51%': { transform: 'scaleY(0)', backgroundColor: '#65a30d', borderColor: '#65a30d' },
           '100%': { transform: 'scaleY(1)', backgroundColor: '#65a30d', borderColor: '#65a30d' },
         },
         flipYellow: {
           '0%': { transform: 'scaleY(1)', backgroundColor: 'white', borderColor: '#6b7280' },
-          '50%': { transform: 'scaleY(0)', backgroundColor: '#fbbf24', borderColor: '#fbbf24' },
+          '50%': { transform: 'scaleY(0)', backgroundColor: 'white', borderColor: '#6b7280' },
+          '51%': { transform: 'scaleY(0)', backgroundColor: '#fbbf24', borderColor: '#fbbf24' },
           '100%': { transform: 'scaleY(1)', backgroundColor: '#fbbf24', borderColor: '#fbbf24' },
         },
         flipGray: {
           '0%': { transform: 'scaleY(1)', backgroundColor: 'white', borderColor: '#6b7280' },
-          '50%': { transform: 'scaleY(0)', backgroundColor: '#cbd5e1', borderColor: '#cbd5e1' },
+          '50%': { transform: 'scaleY(0)', backgroundColor: 'white', borderColor: '#6b7280' },
+          '51%': { transform: 'scaleY(0)', backgroundColor: '#cbd5e1', borderColor: '#cbd5e1' },
           '100%': { transform: 'scaleY(1)', backgroundColor: '#cbd5e1', borderColor: '#cbd5e1' },
         }  
       },
