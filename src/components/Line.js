@@ -84,22 +84,25 @@ const Line = ({ guess, wordleLength, wordle, submitted }) => {
     {
       const char = guess[i];
       let background = {}
+      let classes = 'border-2 border-gray-300 w-16 h-16 flex justify-center items-center capitalize text-3xl font-bold'
+      let classesEntered = 'border-2 border-gray-500 w-16 h-16 flex justify-center items-center capitalize text-4xl font-bold animate-wiggle'
+
       if(submitted)
       {
         if(char === wordle[i])
         {
-          background = {background: '#65a30d', borderColor: '#65a30d'}
+          classesEntered += ' animate-flipGreen bg-lime-600 border-lime-600'
         } else if (wordle.includes(char))
         {
           if(myWordlePairs.filter(item => arrayEquals(item, [char, 0])).length === 0)
           {
             subtractPresent()
-            background = {background: '#fbbf24', borderColor: '#fbbf24'}
+            classesEntered += ' animate-flipYellow bg-amber-400 border-amber-400'
           } else {
-            background = {background: '#cbd5e1', borderColor: '#cbd5e1'}
+            classesEntered += ' animate-flipGray bg-slate-300 border-slate-300'
           }
         } else {
-          background = {background: '#cbd5e1', borderColor: '#cbd5e1'}
+          classesEntered += ' animate-flipGray bg-slate-300 border-slate-300'
         }
       }
     
@@ -109,13 +112,13 @@ const Line = ({ guess, wordleLength, wordle, submitted }) => {
         <div 
           key={i}
           style={background}
-          className='border-2 border-gray-300 w-16 h-16 flex justify-center items-center capitalize text-3xl font-bold'
+          className={classes}
         >{char}</div>
         : 
         <div 
           key={i}
           style={background}
-          className='border-2 border-gray-500 w-16 h-16 flex justify-center items-center capitalize text-4xl font-bold animate-wiggle'
+          className={classesEntered}
         >{char}</div>
       )
     }

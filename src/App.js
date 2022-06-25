@@ -69,12 +69,12 @@ function App() {
 
   return (
     <div className='mx-8 min-h-screen animate-fadeIn'>
-      {showHelp 
-      ? 
-          <Help 
-            setShowHelp={setShowHelp}
-          /> 
-      : <> 
+      {showHelp && 
+        <Help 
+          setShowHelp={setShowHelp}
+        /> 
+      }
+      <div className='z-3'>
       <Navbar 
         setShowHelp={setShowHelp}
       />
@@ -105,8 +105,7 @@ function App() {
             }
           </div>
         </div>
-        </>
-      }
+        </div>
     </div>
   );
 }
