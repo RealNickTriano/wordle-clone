@@ -9,7 +9,12 @@ const Settings = ({ setShowSettings }) => {
             <div className='border-b-2'>
                 <div className='flex justify-end items-center mb-5'>
                     <h1 className='text-center font-bold text-md uppercase mr-[35%]'>Settings</h1>
-                    <button onClick={() => setShowSettings(false)}><IoIosClose size={32}/></button>
+                    <button onClick={() => {
+                        setTimeout(() => {
+                            setShowSettings(false)
+                            console.log('hello')
+                        }, 1000);
+                        }}><IoIosClose size={32}/></button>
                 </div>
                 <p className='mb-2'>Guess the <b>WORDLE</b> in six tries.</p>
                 <p className='mb-2'>Each guess must be a valid five-letter word. 

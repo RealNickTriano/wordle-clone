@@ -14,6 +14,10 @@ module.exports = {
           '0%': { transform: 'translate(0, 50%)', filter: 'opacity(.10)' },
           '100%': { transform: 'translate(0)', filter: 'opacity(1)' },
         },
+        slideDown: {
+          '0%': { transform: 'translate(0)', filter: 'opacity(1)' },
+          '100%': { transform: 'translate(0, 50%)', filter: 'opacity(0)' },
+        },
         fadeOut: {
           '0%': { filter: 'opacity(1)' },
           '100%': { filter: 'opacity(.10)' },
@@ -43,7 +47,8 @@ module.exports = {
       },
       animation: {
         wiggle: 'wiggle 0.1s ease-in-out 1',
-        slideUp: 'slideUp 0.5s ease-in 1',
+        slideUp: 'slideUp 0.5s ease-in 1',  
+        slideDown: 'slideDown 0.5s ease-out 1',  
         fadeOut: 'fadeOut  0.5s ease-out 1',
         fadeIn: 'fadeIn  0.5s ease-in 1',
         flipGreen: 'flipGreen .5s linear 1',

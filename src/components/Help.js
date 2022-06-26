@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IoIosClose } from "react-icons/io";
 import ExampleWord from './ExampleWord';
 
 const Help = ({ setShowHelp }) => {
+    const [style, setStyle] = useState('flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideUp mb-96')
+    const closingStyle = 'flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideDown mb-96'
   return (
     <div className='w-full h-screen bg-gray-50/40 top-0 left-0 fixed z-5 flex justify-center items-center'>
-            <div className='flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideUp mb-96'
+            <div className={style}
             >
                 <div className='border-b-2'>
                     <div className='flex justify-end items-center mb-5'>
                         <h1 className='text-center font-bold text-md uppercase mr-[32%]'>How To Play</h1>
-                        <button onClick={() => setShowHelp(false)}><IoIosClose size={32}/></button>
+                        <button onClick={() => {
+                                setStyle(closingStyle);
+                                setTimeout(() => {
+                                    setShowHelp(false)
+                                }, 450)
+                            }
+                        }><IoIosClose size={32}/></button>
                     </div>
                     <p className='mb-2'>Guess the <b>WORDLE</b> in six tries.</p>
                     <p className='mb-2'>Each guess must be a valid <b className='uppercase'>pokemon</b>. 
