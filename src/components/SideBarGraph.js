@@ -1,13 +1,6 @@
 import React, { useState } from 'react'
 
-const SideBarGraph = () => {
-    const [guessDistribution, setDistribution] = useState([0, 1, 4, 8, 4, 2])
-    /**
-     * width is the value / total guesses(sum of array)
-     * 
-     */
-    console.log(`${Math.max(guessDistribution[0] / guessDistribution.reduce((a, b) => a + b, 0), .1) * 100}%`)
-    
+const SideBarGraph = ({ guessDistribution }) => {
     let bars = []
     for(let i = 0; i < 6; i++)
     {
@@ -17,7 +10,7 @@ const SideBarGraph = () => {
                 <p 
                     className='bg-gray-500 text-white px-2 text-end'
                     style={{
-                        width: `${Math.max(guessDistribution[i] / guessDistribution.reduce((a, b) => a + b, 0), .1) * 100}%` 
+                        width: `${Math.max(guessDistribution[i] / guessDistribution.reduce((a, b) => a + b, 0), .06) * 100}%` 
                     }}
                 >{guessDistribution[i]}</p>
             </div>

@@ -3,10 +3,19 @@ import { IoIosClose } from "react-icons/io";
 import ExampleWord from './ExampleWord';
 
 const Help = ({ setShowHelp }) => {
-    const [style, setStyle] = useState('flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideUp mb-96')
-    const closingStyle = 'flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideDown mb-96'
+    const [style, setStyle] = useState('flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideUp mb-96 dark:bg-neutral-900 dark:text-white')
+    const closingStyle = 'flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideDown mb-96 dark:bg-neutral-900 dark:text-white'
   return (
-    <div className='w-full h-screen bg-gray-50/40 top-0 left-0 fixed z-5 flex justify-center items-center'>
+    <div 
+        onClick={
+            () => {
+                setStyle(closingStyle);
+                setTimeout(() => {
+                    setShowHelp(false)
+                }, 450)
+            }
+        }
+        className='w-full h-screen bg-gray-50/40 dark:bg-gray-800/30 top-0 left-0 fixed z-5 flex justify-center items-center'>
             <div className={style}
             >
                 <div className='border-b-2'>

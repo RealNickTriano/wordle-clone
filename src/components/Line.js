@@ -66,11 +66,9 @@ const Line = ({ guess, wordleLength, wordle, submitted }) => {
           
           if(myPair[0][1] > 0)
           {
-            console.log(myPair[0][1])
             myPair = [myPair[0][0], myPair[0][1] - 1]
             filteredArray = newWordlePairs.filter(item => item[0] !== char)
             filteredArray.push(myPair)
-            console.log(filteredArray)
             newWordlePairs = filteredArray
           }
         }
