@@ -7,6 +7,7 @@ import SideBarGraph from './SideBarGraph';
 import { useState, useEffect } from 'react'
 
 const EndScreen = ({ setShowEndScreen }) => {
+    const API_URL = 'https://wordlemon-api.herokuapp.com/api/time'
     const [style, setStyle] = useState('flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideUp mb-96 dark:bg-neutral-900 dark:text-white')
     const closingStyle = 'flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideDown mb-96 dark:bg-neutral-900 dark:text-white'
 
@@ -16,6 +17,9 @@ const EndScreen = ({ setShowEndScreen }) => {
     const [currentStreak, setCurrentStreak] = useState(0)
     const [maxStreak, setMaxStreak] = useState(0)
     const [guessDistribution, setGuessDistribution] = useState([])
+    const [hours, setHours] = useState()
+    const [minutes, setMinutes] = useState()
+    const [seconds, setSeconds] = useState()
 
     useEffect(() => {
       const stats = JSON.parse(localStorage.getItem('stats'))
@@ -25,6 +29,23 @@ const EndScreen = ({ setShowEndScreen }) => {
       setCurrentStreak(stats.currentStreak)
       setMaxStreak(stats.maxStreak)
       setGuessDistribution(stats.guesses)
+
+      // Fetch the time untill next pokemon
+        const fetchTime = async () => {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw Error('Did not recieve expected data');
+                const time = await response.json();
+                setHours(time.hours)
+                setMinutes(time.minutes)
+                setSeconds(time.seconds)
+            } catch (error) {
+                console.error(error);
+            } finally {
+            
+            }
+        }
+        fetchTime()
 
       /* return () => {
         second
@@ -83,7 +104,11 @@ const EndScreen = ({ setShowEndScreen }) => {
             <div className='flex justify-center items-center gap-32 mt-12 mb-6'>
                 <div className='flex-col justify-center items-center text-center'>
                     <h1 className='font-bold uppercase text-xl'>Next Pokemon</h1>
-                    <Timer />
+                    <Timer 
+                        hours={hours < 10 ? `0${hours}` : hours}
+                        minutes={minutes < 10 ? `0${minutes}` : minutes}
+                        seconds={seconds < 10 ? `0${seconds}` : seconds}
+                    />
                 </div>
                 <ShareButton />
             </div>

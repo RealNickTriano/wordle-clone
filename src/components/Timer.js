@@ -1,8 +1,14 @@
 import React from 'react'
+import { useState } from 'react'
 
-const Timer = () => {
+const Timer = ({ hours, minutes, seconds }) => {
+
   return (
-    <div>I am a timer.</div>
+    <div className='flex justify-center items-center font-md text-3xl gap-2'>
+      <h1>{hours} :</h1>
+      <h1>{minutes} :</h1>
+      <h1>{seconds}</h1>
+    </div>
   )
 }
 
