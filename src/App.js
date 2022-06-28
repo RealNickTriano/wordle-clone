@@ -17,8 +17,8 @@ function App() {
   const [showEndScreen, setShowEndScreen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showStats, setShowStats] = useState(false);
-  const wordle = 'apple'
-  const WORD_LENGTH = 5
+  const [wordle, setWordle] = useState('apple')
+  const API_URL = 'https://wordlemon-api.herokuapp.com/api/wordlemon'
 
   const handleDarkMode = () => {
     if(JSON.parse(localStorage.getItem('settings')).darkMode)
@@ -52,10 +52,9 @@ function App() {
         newState.currentGuess = currentGuess.slice(0, -1)
         localStorage.setItem('board-state', JSON.stringify(newState))
       }
-      
       else if(event.key === 'Enter')
       {
-        if(currentGuess.length !== WORD_LENGTH) return
+        if(currentGuess.length !== wordle.length) return
 
         const isCorrect = wordle === currentGuess
         if(isCorrect) 
@@ -69,7 +68,7 @@ function App() {
           setCurrentGuess('')
           setGameOver(true)
           setWinner(true)
-          setShowEndScreen(true)
+          setTimeout(() => setShowEndScreen(true), 1000)
 
           // set board local storage
           const newState = JSON.parse(localStorage.getItem('board-state'))
@@ -99,7 +98,7 @@ function App() {
           setCurrentGuess('')
           setGameOver(true)
           setWinner(false)
-          setShowEndScreen(true)
+          setTimeout(() => setShowEndScreen(true), 1000)
 
           // set local storage
           const newState = JSON.parse(localStorage.getItem('board-state'))
@@ -134,7 +133,7 @@ function App() {
         }
         
       }
-      else if(currentGuess.length === WORD_LENGTH) return
+      else if(currentGuess.length === wordle.length) return
       else if(event.key.match(/^[a-z]{1}$/) != null)
       {
         setCurrentGuess(currentGuess + event.key)
@@ -152,6 +151,21 @@ function App() {
   }, [currentGuess])
 
   useEffect(() => {
+    // Fetch the wordle for today
+    const fetchPokemon = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw Error('Did not recieve expected data');
+        const pokemon = await response.json();
+        setWordle(pokemon.name)
+      } catch (error) {
+        console.error(error);
+      } finally {
+        
+      }
+    }
+    fetchPokemon()
+
     // On Page load create localStorage object
     if(localStorage.getItem('stats') === null)
     {
@@ -283,7 +297,7 @@ function App() {
                     <Line 
                       key={index}
                       guess={onCurrent ? currentGuess : guess ?? ""}
-                      wordleLength={WORD_LENGTH}  
+                      wordleLength={wordle.length}  
                       wordle={wordle}
                       submitted={!onCurrent && guess !== null}
                     />
