@@ -34,17 +34,6 @@ function App() {
     }
   }
 
-  const handleColorBlind = () => {
-    if(JSON.parse(localStorage.getItem('settings')).colorBlind)
-    {
-      document.documentElement.classList.add('colorBlind')
-    }
-    else
-    {
-      document.documentElement.classList.remove('colorBlind')
-    }
-  }
-
   useEffect(() => {
     const handleType = (event) => {
       if(gameOver) return
@@ -203,8 +192,7 @@ function App() {
     if(localStorage.getItem('settings') === null)
     {
       const settings = {
-        darkMode: false,
-        colorBlind: false
+        darkMode: false
       }
 
       localStorage.setItem('settings', JSON.stringify(settings))
@@ -267,7 +255,6 @@ function App() {
         <Settings 
           setShowSettings={setShowSettings}
           handleDarkMode={handleDarkMode}
-          handleColorBlind={handleColorBlind}
         /> 
       }
 
@@ -285,7 +272,7 @@ function App() {
         setShowSideBar={setShowSideBar}
         setOpenSideBar={setOpenSideBar}
         showSideBar={showSideBar}
-        
+
       />
       {showSideBar &&
         <SideBar 

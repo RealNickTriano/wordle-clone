@@ -3,7 +3,7 @@ import { IoIosClose } from "react-icons/io";
 import { useState } from 'react'
 import Toggle from './Toggle';
 
-const Settings = ({ setShowSettings, handleDarkMode, handleColorBlind }) => {
+const Settings = ({ setShowSettings, handleDarkMode }) => {
     const [style, setStyle] = useState('flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideUp mb-96 dark:bg-neutral-900 dark:text-white')
     const closingStyle = 'flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideDown mb-96 dark:bg-neutral-900 dark:text-white'
 
@@ -14,12 +14,6 @@ const Settings = ({ setShowSettings, handleDarkMode, handleColorBlind }) => {
         handleDarkMode()
     }
 
-    const handleColorBlindModeToggle = () => {
-        const newSettings = JSON.parse(localStorage.getItem('settings'));
-        newSettings.colorBlind = !newSettings.colorBlind;
-        localStorage.setItem(('settings'), JSON.stringify(newSettings));
-        handleColorBlind()
-    }
   return (
     <div
         /* onClick={
@@ -43,7 +37,7 @@ const Settings = ({ setShowSettings, handleDarkMode, handleColorBlind }) => {
                             }
                         }><IoIosClose size={32}/></button>
                 </div>
-                <div className='flex justify-center items-center min-w-full mb-5'>
+                <div className='flex justify-center items-center min-w-full mb-5 gap-64'>
                     <p className='mb-2 w-full'>Dark Mode</p>
                     <Toggle 
                         onClick={handleDarkModeToggle}
@@ -51,13 +45,6 @@ const Settings = ({ setShowSettings, handleDarkMode, handleColorBlind }) => {
                     />
                 </div>
 
-                <div className='flex justify-start items-center min-w-full gap-64'>
-                    <p className='mb-2 w-full'>Colorblind Mode</p>
-                    <Toggle 
-                        onClick={handleColorBlindModeToggle}
-                        mode='colorBlind'
-                    />
-                </div>  
             </div>
         </div>
     </div>
