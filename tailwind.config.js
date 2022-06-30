@@ -13,6 +13,11 @@ module.exports = {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.1)' },
         },
+        wobble: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '25%': { transform: 'translate(-2%, 0)' },
+          '75%': { transform: 'translate(2%, 0)' },
+        },
         slideUp: {
           '0%': { transform: 'translate(0, 50%)', filter: 'opacity(.10)' },
           '100%': { transform: 'translate(0)', filter: 'opacity(1)' },
@@ -62,6 +67,7 @@ module.exports = {
       },
       animation: {
         wiggle: 'wiggle 0.1s ease-in-out 1',
+        wobble: 'wobble 0.3s ease-in-out 1',
         slideUp: 'slideUp 0.5s ease-in 1',  
         slideDown: 'slideDown 0.5s ease-out 1',
         slideInRight: 'slideInRight 0.3s linear 1', 

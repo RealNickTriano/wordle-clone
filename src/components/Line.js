@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-const Line = ({ guess, wordleLength, wordle, submitted }) => {
+const Line = ({ guess, wordleLength, wordle, submitted, error, guessTypes }) => {
   const tiles = []
   
   /** Idea to check count letters?
@@ -125,7 +125,7 @@ const Line = ({ guess, wordleLength, wordle, submitted }) => {
   checkCorrectness();
 
   return (
-    <div className='flex gap-1'>
+    <div className={error ? 'flex gap-1 animate-wobble' : 'flex gap-1'}>
       {tiles}
     </div>
   )

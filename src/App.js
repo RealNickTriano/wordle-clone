@@ -22,9 +22,12 @@ function App() {
   const [showSideBar, setShowSideBar] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [wordle, setWordle] = useState('apple')
+  const [wordError, setWordError] = useState(false);
+  const [wordle, setWordle] = useState('apple');
+  const [guessTypes, setGuessTypes]  = useState(Array(6).fill(null))
   const API_URL = 'https://wordlemon-api.herokuapp.com/api/wordlemon'
   const POKE_API = 'https://pokeapi.co/api/v2/generation/1/'
+  const POKE_DATA_URL = 'https://pokeapi.co/api/v2/pokemon/'
 
   const handleDarkMode = () => {
     if(JSON.parse(localStorage.getItem('settings')).darkMode)
@@ -38,6 +41,21 @@ function App() {
   }
 
   useEffect(() => {
+    const fetchMon = async (currentGuess) => {
+      try {
+        const response = await fetch(`${POKE_DATA_URL}${currentGuess}`);
+        if (!response.ok) throw Error('Did not recieve expected data');
+        const data = await response.json();
+        const newTypes = guessTypes
+        newTypes[guesses.findIndex(value => value === null) - 1] = data.types.map(item => item.type.name)
+        setGuessTypes(newTypes)
+      } catch (error) {
+        console.error(error);
+      } finally {
+
+      }
+    }
+
     const handleType = (event) => {
       if(gameOver) return
       else if(event.key === 'Backspace') 
@@ -49,16 +67,21 @@ function App() {
       }
       else if(event.key === 'Enter')
       {
-        console.log(JSON.parse(localStorage.getItem('word-list')))
         if(currentGuess.length !== wordle.length) return
-        else if(!(JSON.parse(localStorage.getItem('word-list')).includes(currentGuess))) 
+        else if(!(JSON.parse(localStorage.getItem('word-list')).map(item => item.name).includes(currentGuess)))
         {
           setShowAlert(true)
+          setWordError(true)
+          setTimeout(() => {
+            setWordError(false)
+          }, 300)
           setTimeout(() => {
             setShowAlert(false)
           }, 2000)
           return
         }
+        // Fetch types and set display types
+        fetchMon(currentGuess)
         const isCorrect = wordle === currentGuess
         if(isCorrect) 
         {
@@ -174,7 +197,7 @@ function App() {
         const response = await fetch(POKE_API);
         if (!response.ok) throw Error('Did not recieve expected data');
         const listItems = await response.json();
-        const array = listItems.pokemon_species.map(item => item.name);
+        const array = listItems.pokemon_species;
         localStorage.setItem('word-list', JSON.stringify(array))
       } catch (error) {
         console.error(error);
@@ -328,14 +351,19 @@ function App() {
               guesses.map((guess, index) => {
                 const onCurrent = index === guesses.findIndex(value => value === null)
                 return (
+                  <div key={index} className='flex justify-center items-center gap-8'>
                     <Line 
                       key={index}
+                      error={wordError}
                       guess={onCurrent ? currentGuess : guess ?? ""}
-                      wordleLength={wordle.length}  
+                      wordleLength={wordle.length} 
                       wordle={wordle}
                       submitted={!onCurrent && guess !== null}
+                      guessTypes={guessTypes}
                     />
-                  
+                    <h1 className='w-32'>{guessTypes[index] ? `${guessTypes[index]}` : ''}</h1>
+                  </div>
+               
                 )
               })
             }
