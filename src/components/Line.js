@@ -83,7 +83,7 @@ const Line = ({ guess, wordleLength, wordle, submitted }) => {
       const char = guess[i];
       let background = {}
       let classes = 'border-2 border-gray-300 w-16 h-16 flex justify-center items-center capitalize text-3xl font-bold'
-      let classesEntered = 'border-2 border-gray-500 w-16 h-16 flex justify-center items-center capitalize text-4xl font-bold animate-wiggle'
+      let classesEntered = 'border-2 border-gray-500 w-16 h-16 flex justify-center items-center capitalize text-3xl font-bold animate-wiggle pokemon-font pl-1 pt-1'
 
       if(submitted)
       {

@@ -6,6 +6,7 @@ import Help from './components/Help';
 import Settings from './components/Settings'
 import Stats from './components/Stats';
 import EndScreen from './components/EndScreen'
+import SideBar from './components/SideBar';
 
 function App() {
   const [guesses, setGuesses] = useState(Array(6).fill(null))
@@ -17,6 +18,8 @@ function App() {
   const [showEndScreen, setShowEndScreen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  const [showSideBar, setShowSideBar] = useState(false);
+  const [openSideBar, setOpenSideBar] = useState(false);
   const [wordle, setWordle] = useState('apple')
   const API_URL = 'https://wordlemon-api.herokuapp.com/api/wordlemon'
 
@@ -247,12 +250,13 @@ function App() {
   
   return (
     <div className='dark:bg-neutral-900 dark:text-white'>
-    <div className='mx-8 min-h-screen animate-fadeIn'>
-      {showEndScreen &&
-        <EndScreen 
-          setShowEndScreen={setShowEndScreen}
-        />
-      }
+      
+    <div className='mx-8 h-screen animate-fadeIn'>
+        {showEndScreen &&
+          <EndScreen 
+            setShowEndScreen={setShowEndScreen}
+          />
+        }
       {showHelp && 
         <Help 
           setShowHelp={setShowHelp}
@@ -278,7 +282,17 @@ function App() {
         setShowHelp={setShowHelp}
         setShowSettings={setShowSettings}
         setShowStats={setShowStats}
+        setShowSideBar={setShowSideBar}
+        setOpenSideBar={setOpenSideBar}
+        showSideBar={showSideBar}
+        
       />
+      {showSideBar &&
+        <SideBar 
+          setShowSideBar={setShowSideBar}
+          open={openSideBar}
+        />
+      }
         <div className="flex justify-center items-center">
           <div className='flex flex-col gap-1'>
             <div className='min-h-[10rem] flex justify-center items-center'>

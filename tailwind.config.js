@@ -20,8 +20,12 @@ module.exports = {
           '100%': { transform: 'translate(0, 50%)', filter: 'opacity(0)' },
         },
         slideInRight: {
-          '0%': { transform: 'translate(-50%, 0)', filter: 'opacity(0)' },
-          '100%': { transform: 'translate(0, 0)', filter: 'opacity(1)' },
+          '0%': { transform: 'translate(-100%, 0)' },
+          '100%': { transform: 'translate(0, 0)' },
+        },
+        slideOutLeft: {
+          '0%': { transform: 'translate(0, 0)' },
+          '100%': { transform: 'translate(-100%, 0)' },
         },
         slideInLeft: {
           '0%': { transform: 'translate(50%, 0)', filter: 'opacity(0)' },
@@ -58,7 +62,8 @@ module.exports = {
         wiggle: 'wiggle 0.1s ease-in-out 1',
         slideUp: 'slideUp 0.5s ease-in 1',  
         slideDown: 'slideDown 0.5s ease-out 1',
-        slideInRight: 'slideInRight 0.5s ease-in 1',  
+        slideInRight: 'slideInRight 0.3s linear 1', 
+        slideOutLeft: 'slideOutLeft 0.3s linear 1', 
         slideInLeft: 'slideInLeft 0.5s ease-in 1',
         fadeOut: 'fadeOut  0.5s ease-out 1',
         fadeIn: 'fadeIn  0.5s ease-in 1',
