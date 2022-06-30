@@ -54,14 +54,14 @@ const EndScreen = ({ setShowEndScreen }) => {
     
   return (
     <div
-        onClick={
+        /* onClick={
             () => {
                 setStyle(closingStyle);
                 setTimeout(() => {
                     setShowEndScreen(false)
                 }, 450)
             }
-        } 
+        }  */
         className='w-full h-screen bg-gray-50/40 dark:bg-gray-800/30 top-0 left-0 fixed z-5 flex justify-center items-center'>
         <div className={style}
         >
