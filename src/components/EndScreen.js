@@ -30,7 +30,7 @@ const EndScreen = ({ setShowEndScreen }) => {
       setMaxStreak(stats.maxStreak)
       setGuessDistribution(stats.guesses)
 
-      // Fetch the time untill next pokemon
+     /*  // Fetch the time untill next pokemon
         const fetchTime = async () => {
             try {
                 const response = await fetch(API_URL);
@@ -45,7 +45,7 @@ const EndScreen = ({ setShowEndScreen }) => {
             
             }
         }
-        fetchTime()
+        fetchTime() */
 
       /* return () => {
         second
@@ -104,11 +104,7 @@ const EndScreen = ({ setShowEndScreen }) => {
             <div className='flex justify-center items-center gap-32 mt-12 mb-6'>
                 <div className='flex-col justify-center items-center text-center'>
                     <h1 className='font-bold uppercase text-xl'>Next Pokemon</h1>
-                    <Timer 
-                        hours={hours < 10 ? `0${hours}` : hours}
-                        minutes={minutes < 10 ? `0${minutes}` : minutes}
-                        seconds={seconds < 10 ? `0${seconds}` : seconds}
-                    />
+                    <Timer />
                 </div>
                 <ShareButton />
             </div>

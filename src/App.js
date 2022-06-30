@@ -7,6 +7,7 @@ import Settings from './components/Settings'
 import Stats from './components/Stats';
 import EndScreen from './components/EndScreen'
 import SideBar from './components/SideBar';
+import Alert from './components/Alert';
 
 function App() {
   const [guesses, setGuesses] = useState(Array(6).fill(null))
@@ -20,8 +21,10 @@ function App() {
   const [showStats, setShowStats] = useState(false);
   const [showSideBar, setShowSideBar] = useState(false);
   const [openSideBar, setOpenSideBar] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [wordle, setWordle] = useState('apple')
   const API_URL = 'https://wordlemon-api.herokuapp.com/api/wordlemon'
+  const POKE_API = 'https://pokeapi.co/api/v2/generation/1/'
 
   const handleDarkMode = () => {
     if(JSON.parse(localStorage.getItem('settings')).darkMode)
@@ -46,8 +49,16 @@ function App() {
       }
       else if(event.key === 'Enter')
       {
+        console.log(JSON.parse(localStorage.getItem('word-list')))
         if(currentGuess.length !== wordle.length) return
-
+        else if(!(JSON.parse(localStorage.getItem('word-list')).includes(currentGuess))) 
+        {
+          setShowAlert(true)
+          setTimeout(() => {
+            setShowAlert(false)
+          }, 2000)
+          return
+        }
         const isCorrect = wordle === currentGuess
         if(isCorrect) 
         {
@@ -144,7 +155,7 @@ function App() {
 
   useEffect(() => {
     // Fetch the wordle for today
-    const fetchPokemon = async () => {
+    const fetchWordle = async () => {
       try {
         const response = await fetch(API_URL);
         if (!response.ok) throw Error('Did not recieve expected data');
@@ -156,9 +167,28 @@ function App() {
         
       }
     }
-    fetchPokemon()
+    fetchWordle()
+
+    const fetchPokemon = async () => {
+      try {
+        const response = await fetch(POKE_API);
+        if (!response.ok) throw Error('Did not recieve expected data');
+        const listItems = await response.json();
+        const array = listItems.pokemon_species.map(item => item.name);
+        localStorage.setItem('word-list', JSON.stringify(array))
+      } catch (error) {
+        console.error(error);
+      } finally {
+        
+      }
+    }
 
     // On Page load create localStorage object
+    if(localStorage.getItem('word-list') === null)
+    {
+      fetchPokemon()
+    }
+
     if(localStorage.getItem('stats') === null)
     {
       const stats = {
@@ -289,6 +319,9 @@ function App() {
                   wordle={wordle}
                   winner={winner}
                 />
+              }
+              {
+                showAlert && <Alert />
               }
             </div>
             {

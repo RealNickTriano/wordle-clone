@@ -115,7 +115,7 @@ const Line = ({ guess, wordleLength, wordle, submitted }) => {
         : 
         <div 
           key={i}
-          style={background}
+          style={{background}}
           className={classesEntered}
         >{char}</div>
       )

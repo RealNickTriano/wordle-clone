@@ -30,7 +30,7 @@ const Help = ({ setShowHelp }) => {
                         }><IoIosClose size={32}/></button>
                     </div>
                     <p className='mb-2'>Guess the <b>WORDLE</b> in six tries.</p>
-                    <p className='mb-2'>Each guess must be a valid <b className='uppercase'>pokemon</b>. 
+                    <p className='mb-2'>Each guess must be a valid <b className='uppercase'>pokemon</b> from <b>Gen 1</b>. 
                         Hit the enter button to submit.
                     </p>
                     <p className='mb-2'>After each guess, the color of the tiles will change

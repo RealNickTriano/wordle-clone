@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 
 const Timer = ({}) => {
+  let myInterval = null
 
   const [hoursToGo, setHoursToGo] = useState(0);
   const [minutesToGo, setMinutesToGo] = useState(0);
@@ -24,12 +25,19 @@ const Timer = ({}) => {
       setMinutesToGo(60 - currentMinutes)
       setSecondsToGo(60 - currentSeconds)
     }
-    setInterval(Countdown, 1000)
+    
+    myInterval = setInterval(Countdown, 1000)
   }
 
   useEffect(() => {
     Countdown()
+
+    return () => {
+      clearInterval(myInterval)
+    }
   }, [])
+
+  
   
   
   
@@ -39,9 +47,9 @@ const Timer = ({}) => {
       {(hoursToGo === 0 && minutesToGo === 0 && secondsToGo === 0) ?
         <h1 className='pokemon-font text-lg mt-2'>Refresh!</h1>
         :
-        [<h1>{hoursToGo < 10 ? `0${hoursToGo}` : `${hoursToGo}`} :</h1>,
-        <h1>{minutesToGo < 10 ? `0${minutesToGo}` : `${minutesToGo}`} :</h1>,
-        <h1>{secondsToGo < 10 ? `0${secondsToGo}` : `${secondsToGo}`}</h1>]
+        [<h1 key={1}>{hoursToGo < 10 ? `0${hoursToGo}` : `${hoursToGo}`} :</h1>,
+        <h1 key={2}>{minutesToGo < 10 ? `0${minutesToGo}` : `${minutesToGo}`} :</h1>,
+        <h1 key={3}>{secondsToGo < 10 ? `0${secondsToGo}` : `${secondsToGo}`}</h1>]
       }
       
     </div>
