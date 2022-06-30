@@ -1,10 +1,25 @@
 import React from 'react'
 import { IoIosClose } from "react-icons/io";
 import { useState } from 'react'
+import Toggle from './Toggle';
 
 const Settings = ({ setShowSettings, handleDarkMode, handleColorBlind }) => {
     const [style, setStyle] = useState('flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideUp mb-96 dark:bg-neutral-900 dark:text-white')
     const closingStyle = 'flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideDown mb-96 dark:bg-neutral-900 dark:text-white'
+
+    const handleDarkModeToggle = () => {
+        const newSettings = JSON.parse(localStorage.getItem('settings'));
+        newSettings.darkMode = !newSettings.darkMode;
+        localStorage.setItem(('settings'), JSON.stringify(newSettings));
+        handleDarkMode()
+    }
+
+    const handleColorBlindModeToggle = () => {
+        const newSettings = JSON.parse(localStorage.getItem('settings'));
+        newSettings.colorBlind = !newSettings.colorBlind;
+        localStorage.setItem(('settings'), JSON.stringify(newSettings));
+        handleColorBlind()
+    }
   return (
     <div
         /* onClick={
@@ -30,28 +45,18 @@ const Settings = ({ setShowSettings, handleDarkMode, handleColorBlind }) => {
                 </div>
                 <div className='flex justify-center items-center min-w-full mb-5'>
                     <p className='mb-2 w-full'>Dark Mode</p>
-                    <button 
-                        onClick={() => {
-                                const newSettings = JSON.parse(localStorage.getItem('settings'));
-                                newSettings.darkMode = !newSettings.darkMode;
-                                localStorage.setItem(('settings'), JSON.stringify(newSettings));
-                                handleDarkMode()
-                            }
-                        }
-                        className='self-start'>Switch</button>
+                    <Toggle 
+                        onClick={handleDarkModeToggle}
+                        mode='darkMode'
+                    />
                 </div>
 
-                <div className='flex justify-start items-center space-x-64'>
+                <div className='flex justify-start items-center min-w-full gap-64'>
                     <p className='mb-2 w-full'>Colorblind Mode</p>
-                    <button 
-                        onClick={() => {
-                                const newSettings = JSON.parse(localStorage.getItem('settings'));
-                                newSettings.colorBlind = !newSettings.colorBlind;
-                                localStorage.setItem(('settings'), JSON.stringify(newSettings));
-                                handleColorBlind()
-                            }
-                        }
-                        className='self-start'>Switch</button>
+                    <Toggle 
+                        onClick={handleColorBlindModeToggle}
+                        mode='colorBlind'
+                    />
                 </div>  
             </div>
         </div>

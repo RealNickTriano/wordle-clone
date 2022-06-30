@@ -7,3 +7,8 @@
 .pokemon-font {
     font-family: 'Press Start 2P', cursive;
 }
+
+#toggle-switch::after {
+    content: '',
+    @apply h-10 w-20 rounded-full bg-amber-400 absolute left-0 top-0;
+}
