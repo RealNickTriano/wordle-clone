@@ -80,15 +80,17 @@ function App() {
           }, 2000)
           return
         }
-        // Fetch types and set display types
-        fetchMon(currentGuess)
+        else {
+          // Fetch types and set display types
+          fetchMon(currentGuess)
+        }
+        
         const isCorrect = wordle === currentGuess
         if(isCorrect) 
         {
           const indexToSet = guesses.findIndex(value => value === null)
           const newGuesses = guesses
           newGuesses[indexToSet] = currentGuess
-          console.log(indexToSet)
 
           setGuesses(newGuesses)
           setCurrentGuess('')
@@ -102,6 +104,7 @@ function App() {
           newState.currentGuess = ''
           newState.gameStatus = 'WIN'
           newState.lastCompletedTs = new Date().getTime()
+          newState.lastPlayedTs = new Date().getTime()
           localStorage.setItem('board-state', JSON.stringify(newState))
 
           // set stats local storage
@@ -132,6 +135,7 @@ function App() {
           newState.currentGuess = ''
           newState.gameStatus = 'LOSE'
           newState.lastCompletedTs = new Date().getTime()
+          newState.lastPlayedTs = new Date().getTime()
           localStorage.setItem('board-state', JSON.stringify(newState))
 
           // set stats local storage
@@ -262,7 +266,20 @@ function App() {
     const boardState = JSON.parse(localStorage.getItem('board-state'))
     setGuesses(boardState.guesses)
     setCurrentGuess(boardState.currentGuess)
-    if(boardState.gameStatus === "IN-PROGRESS")
+
+    if(new Date(boardState.lastPlayedTs).getUTCDate() < new Date().getUTCDate() && new Date(boardState.lastPlayedTs).getUTCHours() !== 0 &&new Date(boardState.lastPlayedTs).getUTCHours() < 1)
+    {
+      const boardState = {
+        guesses: Array(6).fill(null),
+        currentGuess: "",
+        gameStatus: "IN-PROGRESS",
+        lastCompletedTs: 0,
+        lastPlayedTs: new Date().getTime()
+      }
+
+      localStorage.setItem('board-state', JSON.stringify(boardState))
+    }
+    else if(boardState.gameStatus === "IN-PROGRESS")
     {
 
     }
@@ -351,7 +368,6 @@ function App() {
               guesses.map((guess, index) => {
                 const onCurrent = index === guesses.findIndex(value => value === null)
                 return (
-                  <div key={index} className='flex justify-center items-center gap-8'>
                     <Line 
                       key={index}
                       error={wordError}
@@ -359,14 +375,17 @@ function App() {
                       wordleLength={wordle.length} 
                       wordle={wordle}
                       submitted={!onCurrent && guess !== null}
-                      guessTypes={guessTypes}
                     />
-                    <h1 className='w-32'>{guessTypes[index] ? `${guessTypes[index]}` : ''}</h1>
-                  </div>
-               
                 )
               })
             }
+            {/* {
+              guessTypes.map((type, index) => {
+                return (
+                  <h1 key={index} className='w-32'>{type}</h1>
+                )
+              })
+            } */}
           </div>
         </div>
         </div>

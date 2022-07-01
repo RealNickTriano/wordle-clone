@@ -32,9 +32,6 @@ const Timer = ({}) => {
   useEffect(() => {
     Countdown()
 
-    return () => {
-      clearInterval(myInterval)
-    }
   }, [])
 
   

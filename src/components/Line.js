@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-const Line = ({ guess, wordleLength, wordle, submitted, error, guessTypes }) => {
+const Line = ({ guess, wordleLength, wordle, submitted, error }) => {
   const tiles = []
   
   /** Idea to check count letters?
