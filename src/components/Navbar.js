@@ -3,7 +3,7 @@ import { IoMdClose } from  'react-icons/io'
 import { FaCog, FaChartBar, FaRegQuestionCircle, FaHamburger } from  'react-icons/fa'
 const Navbar = ({ setShowHelp, setShowSettings, setShowStats, setShowSideBar, showSideBar, setOpenSideBar }) => {
   return (
-    <div className='flex justify-center items-center font-bold text-3xl space-x-96 py-2 border-b-2'>
+    <div className='flex justify-center items-center font-bold text-3xl py-2 border-b-2 lg:gap-20 gap-10'>
         <ul className='flex justify-center items-center space-x-4'>
             <li><button onClick={() => {
               setOpenSideBar(!showSideBar)

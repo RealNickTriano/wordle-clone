@@ -2,9 +2,9 @@ import React from 'react'
 import GameListItem from './GameListItem'
 
 const SideBar = ({ open }) => {
-    const enter = 'dark:bg-neutral-800 dark:text-white absolute z-20 left-0 min-h-[1233px] w-[30%] drop-shadow-md dark:shadow-white bg-white flex-col flex justify-start items-center py-16 animate-slideInRight'
+    const enter = 'dark:bg-neutral-800 dark:text-white absolute z-20 left-0 lg:w-[30%] w-[100%] sidebarHeight drop-shadow-md dark:shadow-white bg-white flex-col flex justify-start items-center py-16 animate-slideInRight'
 
-    const leave = 'dark:bg-neutral-800 dark:text-white absolute z-20 left-0 min-h-[1233px] w-[30%] drop-shadow-md bg-white flex-col flex justify-start items-center py-16 animate-slideOutLeft'
+    const leave = 'dark:bg-neutral-800 dark:text-white absolute z-20 left-0 lg:w-[30%] w-[100%] sidebarHeight drop-shadow-md bg-white flex-col flex justify-start items-center py-16 animate-slideOutLeft'
 
   return (
     <div className={open ? enter : leave}>

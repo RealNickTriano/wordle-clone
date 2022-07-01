@@ -4,8 +4,8 @@ import { useState } from 'react'
 import Toggle from './Toggle';
 
 const Settings = ({ setShowSettings, handleDarkMode }) => {
-    const [style, setStyle] = useState('flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideUp mb-96 dark:bg-neutral-900 dark:text-white')
-    const closingStyle = 'flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideDown mb-96 dark:bg-neutral-900 dark:text-white'
+    const [style, setStyle] = useState('flex flex-col justify-center items-center z-10 bg-white shadow-xl p-5 rounded-xl animate-slideUp mb-96 dark:bg-neutral-900 dark:text-white')
+    const closingStyle = 'flex flex-col justify-center items-center z-10 bg-white shadow-xl p-5 rounded-xl animate-slideDown mb-96 dark:bg-neutral-900 dark:text-white'
 
     const handleDarkModeToggle = () => {
         const newSettings = JSON.parse(localStorage.getItem('settings'));
