@@ -22,8 +22,8 @@ const Timer = ({}) => {
 
     } else {
       setHoursToGo(Math.abs(24 - currentHours))
-      setMinutesToGo(60 - currentMinutes)
-      setSecondsToGo(60 - currentSeconds)
+      setMinutesToGo(59 - currentMinutes)
+      setSecondsToGo(59 - currentSeconds)
     }
     
     myInterval = setInterval(Countdown, 1000)

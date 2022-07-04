@@ -63,6 +63,7 @@ function App() {
         setCurrentGuess(currentGuess.slice(0, -1))
         const newState = JSON.parse(localStorage.getItem('board-state'))
         newState.currentGuess = currentGuess.slice(0, -1)
+        newState.lastPlayedTs = new Date().getTime()
         localStorage.setItem('board-state', JSON.stringify(newState))
       }
       else if(event.key === 'Enter')
@@ -158,6 +159,7 @@ function App() {
           newState.guesses = newGuesses
           newState.currentGuess = ''
           newState.gameStatus = 'IN-PROGRESS'
+          newState.lastPlayedTs = new Date().getTime()
           localStorage.setItem('board-state', JSON.stringify(newState))
 
         }
@@ -169,6 +171,7 @@ function App() {
         setCurrentGuess(currentGuess + event.key)
         const newState = JSON.parse(localStorage.getItem('board-state'))
         newState.currentGuess = currentGuess + event.key
+        newState.lastPlayedTs = new Date().getTime()
         localStorage.setItem('board-state', JSON.stringify(newState))
       }
       
@@ -267,13 +270,14 @@ function App() {
     setGuesses(boardState.guesses)
     setCurrentGuess(boardState.currentGuess)
 
-    if(new Date(boardState.lastPlayedTs).getUTCDate() < new Date().getUTCDate() && new Date(boardState.lastPlayedTs).getUTCHours() !== 0 &&new Date(boardState.lastPlayedTs).getUTCHours() < 1)
+    if((new Date(boardState.lastPlayedTs).getUTCDate() < new Date().getUTCDate()) ||
+    (new Date(boardState.lastPlayedTs).getUTCDate() === new Date().getUTCDate() && new Date(boardState.lastPlayedTs).getUTCHours() < 1) )
     {
       const boardState = {
         guesses: Array(6).fill(null),
         currentGuess: "",
         gameStatus: "IN-PROGRESS",
-        lastCompletedTs: 0,
+        lastCompletedTs: JSON.parse(localStorage.getItem('board-state')).lastCompletedTs,
         lastPlayedTs: new Date().getTime()
       }
 
