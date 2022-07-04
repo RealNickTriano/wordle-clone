@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 
 const Timer = ({}) => {
-  let myInterval = null
 
   const [hoursToGo, setHoursToGo] = useState(0);
   const [minutesToGo, setMinutesToGo] = useState(0);
@@ -26,12 +25,17 @@ const Timer = ({}) => {
       setSecondsToGo(59 - currentSeconds)
     }
     
-    myInterval = setInterval(Countdown, 1000)
   }
 
   useEffect(() => {
-    Countdown()
+    const myInterval = setInterval(() => {
+      Countdown();
+    }, 1000);
 
+      return () => {
+        clearInterval(myInterval);
+      }
+    
   }, [])
 
   
