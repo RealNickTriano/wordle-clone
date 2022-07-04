@@ -6,7 +6,7 @@ import { IoIosClose } from "react-icons/io";
 import SideBarGraph from './SideBarGraph';
 import { useState, useEffect } from 'react'
 
-const EndScreen = ({ setShowEndScreen }) => {
+const EndScreen = ({ setShowEndScreen, tries }) => {
     const API_URL = 'https://wordlemon-api.herokuapp.com/api/time'
     const [style, setStyle] = useState('flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideUp mb-96 dark:bg-neutral-900 dark:text-white')
     const closingStyle = 'flex flex-col justify-center items-center max-w-[40%] z-10 bg-white shadow-xl p-5 rounded-xl animate-slideDown mb-96 dark:bg-neutral-900 dark:text-white'
@@ -106,7 +106,9 @@ const EndScreen = ({ setShowEndScreen }) => {
                     <h1 className='font-bold uppercase text-xl'>Next Pokemon</h1>
                     <Timer />
                 </div>
-                <ShareButton />
+                <ShareButton 
+                    tries={tries}
+                />
             </div>
         </div>
     </div>

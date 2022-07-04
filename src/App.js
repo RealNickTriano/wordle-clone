@@ -317,6 +317,7 @@ function App() {
         {showEndScreen &&
           <EndScreen 
             setShowEndScreen={setShowEndScreen}
+            tries={guesses.findIndex(value => value === null)}
           />
         }
       {showHelp && 
