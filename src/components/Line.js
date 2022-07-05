@@ -1,15 +1,36 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 
-const Line = ({ guess, wordleLength, wordle, submitted, error }) => {
+const Line = ({ guess, wordleLength, wordle, submitted, error, setColors1, setColors2, setColors3, keysRow1, keysRow2, keysRow3, colors1, colors2, colors3 }) => {
   const tiles = []
   
-  /** Idea to check count letters?
-   * init array that has count of each letter in pairs i.e. [(a,1),(p,2)
-   * ,(l,1),(e,1)]
-   * every char that we see decrement count of respective letter by 1
-   * if the count of letter is 0 then background - gray
-   */
+  const setKeyColors = (bgColor, char) => {
+    keysRow1.forEach((key1, index1) => {
+      if(key1 === char)
+      {
+        const newColors1 = colors1
+        newColors1[index1] = bgColor
+        setColors1(newColors1)
+      }
+    })
+    keysRow2.forEach((key2, index2) => {
+      if(key2 === char)
+      {
+        const newColors2 = colors2
+        newColors2[index2] = bgColor
+        setColors2(newColors2)
+      }
+    })
+    keysRow3.forEach((key3, index3) => {
+      if(key3 === char)
+      {
+        const newColors3 = colors3
+        newColors3[index3] = bgColor
+        setColors3(newColors3)
+      }
+    })
+  }
+
   const arrayEquals = (a, b) => {
     for (var i = 0; i < a.length; ++i) {
       if (a[i] !== b[i]) return false;
@@ -91,17 +112,22 @@ const Line = ({ guess, wordleLength, wordle, submitted, error }) => {
         if(char === wordle[i])
         {
           classesEntered += ' animate-flipGreen bg-lime-600 border-lime-600'
+          setKeyColors('bg-lime-600', wordle[i])
+          console.log(char)
         } else if (wordle.includes(char))
         {
           if(myWordlePairs.filter(item => arrayEquals(item, [char, 0])).length === 0)
           {
             subtractPresent(char)
             classesEntered += ' animate-flipYellow bg-amber-400 border-amber-400'
+            setKeyColors('bg-amber-400', char)
           } else {
             classesEntered += ' animate-flipGray bg-slate-300 border-slate-300'
+            setKeyColors('bg-slate-300', char)
           }
         } else {
           classesEntered += ' animate-flipGray bg-slate-300 border-slate-300'
+          setKeyColors('bg-slate-300', char)
         }
       }
     

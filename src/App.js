@@ -12,6 +12,10 @@ import Key from './components/Key';
 import Keyboard from './components/Keyboard';
 
 function App() {
+  const keysRow1 = ['q','w','e','r','t','y','u','i','o','p']
+  const keysRow2 = ['a','s','d','f','g','h','j','k','l']
+  const keysRow3 = ['Enter','z','x','c','v','b','n','m','Backspace']
+
   const [guesses, setGuesses] = useState(Array(6).fill(null))
   const [currentGuess, setCurrentGuess] = useState('')
   const [gameOver, setGameOver] = useState(false);
@@ -25,6 +29,11 @@ function App() {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [wordError, setWordError] = useState(false);
+
+  const [colors1, setColors1] = useState(['bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400',]);
+  const [colors2, setColors2] = useState(['bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400',]);
+  const [colors3, setColors3] = useState(['bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400','bg-slate-400',]);
+
   const [wordle, setWordle] = useState('apple');
   const [guessTypes, setGuessTypes]  = useState(Array(6).fill(null))
   const API_URL = 'https://wordlemon-api.herokuapp.com/api/wordlemon'
@@ -383,11 +392,26 @@ function App() {
                       wordleLength={wordle.length} 
                       wordle={wordle}
                       submitted={!onCurrent && guess !== null}
+                      setColors1={setColors1}
+                      setColors2={setColors2}
+                      setColors3={setColors3}
+                      keysRow1={keysRow1}
+                      keysRow2={keysRow2}
+                      keysRow3={keysRow3}
+                      colors1={colors1}
+                      colors2={colors2}
+                      colors3={colors3}
                     />
                 )
               })
             }
             <Keyboard 
+              keysRow1={keysRow1}
+              keysRow2={keysRow2}
+              keysRow3={keysRow3}
+              colors1={colors1}
+              colors2={colors2}
+              colors3={colors3}
               handleType={handleType}
             />
           </div>
