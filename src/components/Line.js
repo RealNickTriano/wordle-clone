@@ -54,13 +54,13 @@ const Line = ({ guess, wordleLength, wordle, submitted, error }) => {
       if(filteredArray.length !== 0) myWordlePairs = filteredArray
     }
 
-    const subtractPresent = () => {
+    const subtractPresent = (myChar) => {
       let newWordlePairs = myWordlePairs
       let filteredArray = []
       for (let j = 0; j < wordleLength; j++) 
       {
         const char = guess[j]
-        if(wordle.includes(char))
+        if(wordle.includes(char) && char === myChar)
         {
           let myPair = newWordlePairs.filter(item => item[0] === char)
           
@@ -87,6 +87,7 @@ const Line = ({ guess, wordleLength, wordle, submitted, error }) => {
 
       if(submitted)
       {
+        console.log(myWordlePairs)
         if(char === wordle[i])
         {
           classesEntered += ' animate-flipGreen bg-lime-600 border-lime-600'
@@ -94,7 +95,7 @@ const Line = ({ guess, wordleLength, wordle, submitted, error }) => {
         {
           if(myWordlePairs.filter(item => arrayEquals(item, [char, 0])).length === 0)
           {
-            subtractPresent()
+            subtractPresent(char)
             classesEntered += ' animate-flipYellow bg-amber-400 border-amber-400'
           } else {
             classesEntered += ' animate-flipGray bg-slate-300 border-slate-300'
