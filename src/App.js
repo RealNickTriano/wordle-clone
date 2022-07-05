@@ -8,6 +8,8 @@ import Stats from './components/Stats';
 import EndScreen from './components/EndScreen'
 import SideBar from './components/SideBar';
 import Alert from './components/Alert';
+import Key from './components/Key';
+import Keyboard from './components/Keyboard';
 
 function App() {
   const [guesses, setGuesses] = useState(Array(6).fill(null))
@@ -40,143 +42,144 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    const fetchMon = async (currentGuess) => {
-      try {
-        const response = await fetch(`${POKE_DATA_URL}${currentGuess}`);
-        if (!response.ok) throw Error('Did not recieve expected data');
-        const data = await response.json();
-        const newTypes = guessTypes
-        newTypes[guesses.findIndex(value => value === null) - 1] = data.types.map(item => item.type.name)
-        setGuessTypes(newTypes)
-      } catch (error) {
-        console.error(error);
-      } finally {
+  const fetchMon = async (currentGuess) => {
+    try {
+      const response = await fetch(`${POKE_DATA_URL}${currentGuess}`);
+      if (!response.ok) throw Error('Did not recieve expected data');
+      const data = await response.json();
+      const newTypes = guessTypes
+      newTypes[guesses.findIndex(value => value === null) - 1] = data.types.map(item => item.type.name)
+      setGuessTypes(newTypes)
+    } catch (error) {
+      console.error(error);
+    } finally {
 
-      }
     }
+  }
 
-    const handleType = (event) => {
-      if(gameOver) return
-      else if(event.key === 'Backspace') 
+  const handleType = (event) => {
+    if(gameOver) return
+    else if(event.key === 'Backspace') 
+    {
+      setCurrentGuess(currentGuess.slice(0, -1))
+      const newState = JSON.parse(localStorage.getItem('board-state'))
+      newState.currentGuess = currentGuess.slice(0, -1)
+      newState.lastPlayedTs = new Date().getTime()
+      localStorage.setItem('board-state', JSON.stringify(newState))
+    }
+    else if(event.key === 'Enter')
+    {
+      if(currentGuess.length !== wordle.length) return
+      else if(!(JSON.parse(localStorage.getItem('word-list')).map(item => item.name).includes(currentGuess)))
       {
-        setCurrentGuess(currentGuess.slice(0, -1))
+        setShowAlert(true)
+        setWordError(true)
+        setTimeout(() => {
+          setWordError(false)
+        }, 300)
+        setTimeout(() => {
+          setShowAlert(false)
+        }, 2000)
+        return
+      }
+      else {
+        // Fetch types and set display types
+        fetchMon(currentGuess)
+      }
+      
+      const isCorrect = wordle === currentGuess
+      if(isCorrect) 
+      {
+        const indexToSet = guesses.findIndex(value => value === null)
+        const newGuesses = guesses
+        newGuesses[indexToSet] = currentGuess
+
+        setGuesses(newGuesses)
+        setCurrentGuess('')
+        setGameOver(true)
+        setWinner(true)
+        setTimeout(() => setShowEndScreen(true), 1000)
+
+        // set board local storage
         const newState = JSON.parse(localStorage.getItem('board-state'))
-        newState.currentGuess = currentGuess.slice(0, -1)
+        newState.guesses = newGuesses
+        newState.currentGuess = ''
+        newState.gameStatus = 'WIN'
+        newState.lastCompletedTs = new Date().getTime()
         newState.lastPlayedTs = new Date().getTime()
         localStorage.setItem('board-state', JSON.stringify(newState))
+
+        // set stats local storage
+        const statState = JSON.parse(localStorage.getItem('stats'))
+        statState.gamesPlayed += 1
+        statState.currentStreak += 1
+        statState.guesses[indexToSet] += 1
+        statState.gamesWon += 1
+        statState.winPercentage = Math.floor((statState.gamesWon / statState.gamesPlayed) * 100)
+        if(statState.maxStreak < statState.currentStreak) statState.maxStreak = statState.currentStreak
+        localStorage.setItem('stats', JSON.stringify(statState))
       }
-      else if(event.key === 'Enter')
+      else if(guesses.findIndex(value => value === null) === guesses.length - 1)
       {
-        if(currentGuess.length !== wordle.length) return
-        else if(!(JSON.parse(localStorage.getItem('word-list')).map(item => item.name).includes(currentGuess)))
-        {
-          setShowAlert(true)
-          setWordError(true)
-          setTimeout(() => {
-            setWordError(false)
-          }, 300)
-          setTimeout(() => {
-            setShowAlert(false)
-          }, 2000)
-          return
-        }
-        else {
-          // Fetch types and set display types
-          fetchMon(currentGuess)
-        }
-        
-        const isCorrect = wordle === currentGuess
-        if(isCorrect) 
-        {
-          const indexToSet = guesses.findIndex(value => value === null)
-          const newGuesses = guesses
-          newGuesses[indexToSet] = currentGuess
+        const indexToSet = guesses.findIndex(value => value === null)
+        const newGuesses = guesses
+        newGuesses[indexToSet] = currentGuess
 
-          setGuesses(newGuesses)
-          setCurrentGuess('')
-          setGameOver(true)
-          setWinner(true)
-          setTimeout(() => setShowEndScreen(true), 1000)
+        setGuesses(newGuesses)
+        setCurrentGuess('')
+        setGameOver(true)
+        setWinner(false)
+        setTimeout(() => setShowEndScreen(true), 1000)
 
-          // set board local storage
-          const newState = JSON.parse(localStorage.getItem('board-state'))
-          newState.guesses = newGuesses
-          newState.currentGuess = ''
-          newState.gameStatus = 'WIN'
-          newState.lastCompletedTs = new Date().getTime()
-          newState.lastPlayedTs = new Date().getTime()
-          localStorage.setItem('board-state', JSON.stringify(newState))
-
-          // set stats local storage
-          const statState = JSON.parse(localStorage.getItem('stats'))
-          statState.gamesPlayed += 1
-          statState.currentStreak += 1
-          statState.guesses[indexToSet] += 1
-          statState.gamesWon += 1
-          statState.winPercentage = Math.floor((statState.gamesWon / statState.gamesPlayed) * 100)
-          if(statState.maxStreak < statState.currentStreak) statState.maxStreak = statState.currentStreak
-          localStorage.setItem('stats', JSON.stringify(statState))
-        }
-        else if(guesses.findIndex(value => value === null) === guesses.length - 1)
-        {
-          const indexToSet = guesses.findIndex(value => value === null)
-          const newGuesses = guesses
-          newGuesses[indexToSet] = currentGuess
-
-          setGuesses(newGuesses)
-          setCurrentGuess('')
-          setGameOver(true)
-          setWinner(false)
-          setTimeout(() => setShowEndScreen(true), 1000)
-
-          // set local storage
-          const newState = JSON.parse(localStorage.getItem('board-state'))
-          newState.guesses = newGuesses
-          newState.currentGuess = ''
-          newState.gameStatus = 'LOSE'
-          newState.lastCompletedTs = new Date().getTime()
-          newState.lastPlayedTs = new Date().getTime()
-          localStorage.setItem('board-state', JSON.stringify(newState))
-
-          // set stats local storage
-          const statState = JSON.parse(localStorage.getItem('stats'))
-          statState.gamesPlayed += 1
-          localStorage.setItem('stats', JSON.stringify(statState))
-
-        }
-        else
-        {
-          const indexToSet = guesses.findIndex(value => value === null)
-          const newGuesses = guesses
-          newGuesses[indexToSet] = currentGuess
-
-          setGuesses(newGuesses)
-          setCurrentGuess('')
-
-          // set local storage
-          const newState = JSON.parse(localStorage.getItem('board-state'))
-          newState.guesses = newGuesses
-          newState.currentGuess = ''
-          newState.gameStatus = 'IN-PROGRESS'
-          newState.lastPlayedTs = new Date().getTime()
-          localStorage.setItem('board-state', JSON.stringify(newState))
-
-        }
-        
-      }
-      else if(currentGuess.length === wordle.length) return
-      else if(event.key.match(/^[a-z]{1}$/) != null)
-      {
-        setCurrentGuess(currentGuess + event.key)
+        // set local storage
         const newState = JSON.parse(localStorage.getItem('board-state'))
-        newState.currentGuess = currentGuess + event.key
+        newState.guesses = newGuesses
+        newState.currentGuess = ''
+        newState.gameStatus = 'LOSE'
+        newState.lastCompletedTs = new Date().getTime()
         newState.lastPlayedTs = new Date().getTime()
         localStorage.setItem('board-state', JSON.stringify(newState))
+
+        // set stats local storage
+        const statState = JSON.parse(localStorage.getItem('stats'))
+        statState.gamesPlayed += 1
+        localStorage.setItem('stats', JSON.stringify(statState))
+
+      }
+      else
+      {
+        const indexToSet = guesses.findIndex(value => value === null)
+        const newGuesses = guesses
+        newGuesses[indexToSet] = currentGuess
+
+        setGuesses(newGuesses)
+        setCurrentGuess('')
+
+        // set local storage
+        const newState = JSON.parse(localStorage.getItem('board-state'))
+        newState.guesses = newGuesses
+        newState.currentGuess = ''
+        newState.gameStatus = 'IN-PROGRESS'
+        newState.lastPlayedTs = new Date().getTime()
+        localStorage.setItem('board-state', JSON.stringify(newState))
+
       }
       
     }
+    else if(currentGuess.length === wordle.length) return
+    else if(event.key.match(/^[a-z]{1}$/) != null)
+    {
+      setCurrentGuess(currentGuess + event.key)
+      const newState = JSON.parse(localStorage.getItem('board-state'))
+      newState.currentGuess = currentGuess + event.key
+      newState.lastPlayedTs = new Date().getTime()
+      localStorage.setItem('board-state', JSON.stringify(newState))
+    }
+    
+  }
 
+  useEffect(() => {
+    
     window.addEventListener('keydown', handleType)
 
     return () => window.removeEventListener('keydown', handleType)
@@ -356,7 +359,7 @@ function App() {
         />
       }
         <div className="flex justify-center items-center">
-          <div className='flex flex-col gap-1'>
+          <div className='flex flex-col gap-1 justify-center items-center'>
             <div className='min-h-[10rem] flex justify-center items-center'>
               {
                 gameOver && 
@@ -384,13 +387,9 @@ function App() {
                 )
               })
             }
-            {/* {
-              guessTypes.map((type, index) => {
-                return (
-                  <h1 key={index} className='w-32'>{type}</h1>
-                )
-              })
-            } */}
+            <Keyboard 
+              handleType={handleType}
+            />
           </div>
         </div>
         </div>
