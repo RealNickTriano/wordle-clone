@@ -294,6 +294,8 @@ function App() {
       }
 
       localStorage.setItem('board-state', JSON.stringify(boardState))
+      setGuesses(boardState.guesses)
+      setCurrentGuess(boardState.currentGuess)
     }
     else if(boardState.gameStatus === "IN-PROGRESS")
     {
