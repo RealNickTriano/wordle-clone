@@ -3,7 +3,7 @@ import { FaBackspace } from "react-icons/fa";
 
 const Key = ({ keyName, click, bgColor }) => {
     const myEvent = new KeyboardEvent('keydown', {key: keyName})
-    const myClass = `flex justify-center items-center uppercase pokemon-font ${bgColor} rounded-md lg:p-4 lg:text-xl text-md p-2`
+    const myClass = `flex justify-center items-center uppercase pokemon-font ${bgColor} rounded-md lg:p-4 lg:text-xl md:text-lg md:p-3 text-md p-2`
 
   return (
     <button
